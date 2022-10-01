@@ -1,5 +1,5 @@
 const express = require('express');
-const userController = require('../../middlewares/user.controller');
+const userController = require('../../controllers/user.controller');
 const router = express.Router();
 
 router.route('/random')
@@ -7,6 +7,9 @@ router.route('/random')
 
 router.route('/all')
     .get(userController.allUser);
+
+router.route('/save')
+    .post(userController.saveUser);
 
 
 
