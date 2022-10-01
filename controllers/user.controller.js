@@ -36,15 +36,49 @@ module.exports.saveUser = (req, res, next) => {
         res.send("Already exists");
     }
     else{
-        parseData.push(newUser);
 
-        fs.writeFile(__dirname + '/../data.json', JSON.stringify(parseData), (err) => {
-            if(err){
-                res.send("User save failed");
+        if(newUser.id){
+            if(newUser.gender){
+                if(newUser.name){
+                    if(newUser.contact){
+                        if(newUser.address){
+                            if(newUser.photoUrl){
+                                parseData.push(newUser);
+
+                                fs.writeFile(__dirname + '/../data.json', JSON.stringify(parseData), (err) => {
+                                    if(err){
+                                        res.send("User save failed");
+                                    }
+                                    else{
+                                        res.send("User saved");
+                                    }
+                                });
+                            }
+                            else{
+                                res.send("Please, save data with photoUrl")
+                            }
+                        }
+                        else{
+                            res.send("Please, save data with address")
+                        }
+                    }
+                    else{
+                        res.send("Please, save data with contact")
+                    }
+                }
+                else{
+                    res.send("Please, save data with name")
+                }
             }
             else{
-                res.send("User saved");
+                res.send("Please, save data with gender")
             }
-        });
+        }
+        else{
+            res.send("Please, save data with id")
+        }
+
+        
+        // res.send("ok")
     }
 }
