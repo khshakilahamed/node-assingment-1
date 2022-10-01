@@ -11,6 +11,12 @@ router.route('/all')
 router.route('/save')
     .post(userController.saveUser);
 
+router.route('/update')
+    .patch(userController.updateUser);
+
+router.route('/delete/:id')
+    .delete(userController.deleteUser);
+
 
 
 module.exports = router;

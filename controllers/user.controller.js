@@ -82,3 +82,54 @@ module.exports.saveUser = (req, res, next) => {
         // res.send("ok")
     }
 }
+
+module.exports.updateUser = (req, res, next) => {
+    const updatedInfo = req.body;
+    const data = fs.readFileSync(__dirname + '/../data.json');
+
+    const parseData = JSON.parse(data);
+    const updateAbleUser = parseData.find( data => data.id === updatedInfo.id);
+
+    if(!updateAbleUser) {
+        res.send("User is not exists");
+    }
+    else{
+        updateAbleUser.id = updatedInfo.id;
+        updateAbleUser.gender = updatedInfo.gender;
+        updateAbleUser.name = updatedInfo.name;
+        updateAbleUser.contact = updatedInfo.contact;
+        updateAbleUser.address = updatedInfo.address;
+        updateAbleUser.photoUrl = updatedInfo.photoUrl;
+
+        // res.send(JSON.stringify)
+
+        fs.writeFile(__dirname + '/../data.json', JSON.stringify(parseData), (err) => {
+            if(err){
+                res.send("Update failed");
+            }
+            else{
+                res.send("User's info Updated");
+            }
+        });
+
+    }
+}
+
+module.exports.deleteUser = (req, res, next) => {
+    const { id} = req.params;
+    const data = fs.readFileSync(__dirname + '/../data.json');
+
+    const parseData = JSON.parse(data);
+    const newUsers = parseData.filter( data => data.id !== Number(id));
+
+    console.log(newUsers);
+
+    fs.writeFile(__dirname + '/../data.json', JSON.stringify(newUsers), (err) => {
+        if(err){
+            res.send("Failed");
+        }
+        else{
+            res.send("Deleted");
+        }
+    });
+}
