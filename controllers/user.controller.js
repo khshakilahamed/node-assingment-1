@@ -13,15 +13,15 @@ module.exports.randomUser = (req, res, next) => {
 module.exports.allUser = (req, res, next) => {
     const {limit} = req.query;
     const data = fs.readFileSync(__dirname + '/../data.json');
+    const parseData = JSON.parse(data);
 
     if(limit){
-        const parseData = JSON.parse(data);
         const sliceData = JSON.stringify(parseData.slice(0, limit));
         
         res.send(sliceData);
     }
     else{
-        res.send(data);
+        res.send(JSON.stringify(parseData));
     }
 }
 
