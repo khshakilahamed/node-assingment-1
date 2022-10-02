@@ -133,3 +133,39 @@ module.exports.deleteUser = (req, res, next) => {
         }
     });
 }
+
+module.exports.bulkUpdate = (req, res, next) => {
+    const users = req.body;
+
+    const data = fs.readFileSync(__dirname + '/../data.json');
+
+    const parseData = JSON.parse(data);
+
+    // console.log(users.length);
+
+    for(let i = 0; i < users.length; i++){
+        for(let j = 0; j < parseData.length; j++){
+            if(users[i].id == parseData[j].id){
+                parseData[j].gender = users[i].gender;
+                parseData[j].name = users[i].name;
+                parseData[j].contact = users[i].contact;
+                parseData[j].address = users[i].address;
+                parseData[j].photoUrl = users[i].photoUrl;
+            }
+            else{
+                // res.send("User does not exist");
+            }
+        }
+    }
+
+    fs.writeFile(__dirname + '/../data.json' , JSON.stringify(parseData), (err) => {
+        if(err){
+            res.send(err.message);
+        }
+        else{
+            res.send("Successfully updated!!!");
+        }
+    })
+
+    // res.send("ok");
+}

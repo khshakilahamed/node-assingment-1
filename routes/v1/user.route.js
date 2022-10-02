@@ -17,6 +17,9 @@ router.route('/update')
 router.route('/delete/:id')
     .delete(userController.deleteUser);
 
+router.route('/bulk-update')
+    .patch(userController.bulkUpdate);
+
 
 
 module.exports = router;
