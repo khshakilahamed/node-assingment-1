@@ -95,7 +95,7 @@ router.route('/delete/:id')
     .delete(userController.deleteUser);
 
 router.route('/bulk-update')
-/**
+    /**
      * @api {patch} /user/bulk-update - update multiple user
      * @apiDescription update multiple user and get as array through req.body
      * @apiPermission admin
